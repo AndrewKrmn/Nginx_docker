@@ -19,10 +19,13 @@ pipeline {
                 sh 'docker run -d -p 80:80 chikibevchik/nginx-site'
             }
         }
-        
-        stage('Push') {
+        stage('Push to Docker Hub') {
             steps {
-                sh 'docker push chikibevchik/nginx-site'
+                script {
+                    docker.withRegistry("https://index.docker.io/v1/", "chort") {
+                        sh "docker push chikibevchik/nginx-site"
+                    }
+                }
             }
         }
     }
