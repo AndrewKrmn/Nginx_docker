@@ -31,7 +31,7 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 sh 'docker login -u chikibevchik -p ${DOCKERHUB_CREDENTIALS}'
-                sh ‘docker push chikibevchik/nginx-site’
+                sh 'docker push chikibevchik/nginx-site'
                 }
             }
         }
