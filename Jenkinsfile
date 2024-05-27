@@ -28,8 +28,9 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                    docker.withRegistry("https://index.docker.io/v1/", "chort") {
-                        sh "docker push chikibevchik/nginx-site"
+                   def dockerImage = docker.build("chikibevchik/nginx-site")
+                    docker.withRegistry('https://index.docker.io/v1/', 'chort') {
+                        dockerImage.push()
                     }
                 }
             }
