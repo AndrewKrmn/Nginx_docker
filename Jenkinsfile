@@ -1,13 +1,19 @@
 pipeline {
     agent any
     
+    triggers {
+        pollSCM('H/5 * * * *') 
+    }
+    
     stages {
         stage('Checkout') {
             steps {
-                git 'https://github.com/AndrewKrmn/Nginx_docker.git'
+                script {
+                    checkout scm
+                }
             }
         }
-        
+         
         stage('Build') {
             steps {
                 sh 'docker build -t chikibevchik/nginx-site .'
