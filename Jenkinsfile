@@ -4,7 +4,9 @@ pipeline {
     triggers {
         pollSCM('H/5 * * * *') 
     }
-    
+    environment {
+        DOCKERHUB_CREDENTIALS = credentials('token') // Заміна на ваш ID
+    }
     stages {
         stage('Checkout') {
             steps {
@@ -29,9 +31,8 @@ pipeline {
         stage('Push to Docker Hub') {
             steps {
                 script {
-                   withCredentials([string(credentialsId: ‘chort’, variable: ‘text’)]) {
-                       sh ‘docker login -u chikibevchik -p ${text}’
-                       sh ‘docker push chikibevchik/nginx-site’
+                    sh "echo ${DOCKERHUB_CREDENTIALS_PSW} | docker login -u ${DOCKERHUB_CREDENTIALS_USR} --password-stdin"
+                    sh ‘docker push chikibevchik/nginx-site’
                     }
                 }
             }
