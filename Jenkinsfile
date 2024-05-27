@@ -30,7 +30,7 @@ pipeline {
             steps {
                 script {
                    def dockerImage = docker.build("chikibevchik/nginx-site")
-                    docker.withRegistry('https://index.docker.io/v1/', 'chort') {
+                    docker.withRegistry('https://registry.hub.docker.com', 'chort') {
                         dockerImage.push()
                     }
                 }
