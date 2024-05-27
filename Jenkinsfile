@@ -23,7 +23,7 @@ pipeline {
         stage('Run') {
             steps {
                 sh 'docker rm -f chort'
-                sh 'docker run -t chort -d -p 80:80 chikibevchik/nginx-site'
+                sh 'docker run -it chort -d -p 80:80 chikibevchik/nginx-site'
             }
         }
         stage('Push to Docker Hub') {
