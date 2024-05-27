@@ -4,38 +4,31 @@ pipeline {
     stages {
         stage('Checkout') {
             steps {
-                // Клонувати код з репозиторію
-                git 'https://github.com/your/repository.git'
+                git 'https://github.com/AndrewKrmn/Nginx_docker.git'
             }
         }
         
         stage('Build') {
             steps {
-                // Виконати будівництво проекту (наприклад, для мови Java)
-                sh 'mvn clean package'
+                sh 'docker build -t chikibevchik/nginx-site .'
             }
         }
         
-        stage('Test') {
+        stage('Run') {
             steps {
-                // Виконати тести (якщо вони є)
-                sh 'mvn test'
+                sh 'docker run -d -p 80:80 chikibevchik/nginx-site'
             }
         }
         
-        stage('Deploy') {
+        stage('Push') {
             steps {
-                // Розгортання або поширення (залежно від потреб)
-                // Наприклад, можна використовувати scp для копіювання файлів на віддалений сервер
-                sh 'scp target/*.jar user@example.com:/path/to/destination'
+                sh 'docker push chikibevchik/nginx-site'
             }
         }
     }
     
     post {
         always {
-            // Виконати завжди, навіть якщо є помилка
-            // Можна додати дії, такі як відправка повідомлення про статус конвеєра
             echo 'Pipeline finished'
         }
     }
